@@ -1,0 +1,12 @@
+LOAD DATABASE
+     FROM     mysql://100pbcu:100pbcp@10.197.3.190:8030/100pbcd
+     
+     INTO     postgres://100pbcu:100pbcp@10.197.3.190:8045/100pbcd
+           set timezone to 'Australia/Sydney'
+ WITH include drop, create tables
+
+ALTER SCHEMA '100pbcd' RENAME TO'public'
+
+BEFORE LOAD DO
+ $$ DROP SCHEMA IF EXISTS public CASCADE; $$
+;

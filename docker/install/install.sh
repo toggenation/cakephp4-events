@@ -1,0 +1,39 @@
+
+apt-get install php8.1 \
+    php8.1-cli \
+    php8.1-gd \
+    php8.1-mbstring \
+    php8.1-mailparse \
+    php8.1-opcache \
+    php8.1-xml \
+    php8.1-mysql \
+    php8.1-curl \
+    php8.1-intl \
+    php8.1-ssh2 \
+    php8.1-sqlite3 \
+    curl \
+    apt-transport-https \
+    vim \
+    cups \
+    cups-bsd \
+    cups-client \
+    printer-driver-cups-pdf \
+    mysql-client \
+    nmap \
+    iproute2 \
+    hplip \
+    locales \
+    git \
+    unzip \
+    php-dev \
+    autoconf \
+    automake \
+    xz-utils \
+    cmake \
+    openjdk-18-jre-headless \
+    openssh-client \
+    iputils-ping \
+    telnet \
+    libxml2-utils \
+    php-fpm \
+    php-mysql

@@ -1,0 +1,14 @@
+fastcgi_param DEBUG true;
+fastcgi_param ENVIRONMENT	TEST;
+fastcgi_param PRINT_DEBUG true;
+fastcgi_param SESSION_COOKIE_NAME TEST_SESS;
+fastcgi_param SESSION_TIMEOUT	0;
+fastcgi_param EMAIL_PROFILE	default;
+fastcgi_param APP_NAME	"Toggen WMS";
+fastcgi_param SFTP_HOST	sftp;
+fastcgi_param SFTP_USER	sftpuser;
+fastcgi_param SFTP_PASS	"sftppass";
+fastcgi_param SFTP_TIMEOUT	2;
+fastcgi_param API_TOKEN	auth-token-c76f0f14ff2c6682149999c37454c040;
+fastcgi_param CUPS_HOST	cups;
+fastcgi_param BROWSERSHOT_HOST	nginx;

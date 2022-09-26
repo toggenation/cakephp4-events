@@ -1,0 +1,16 @@
+# add extra aliases here
+alias mc='cd /var/www/wms && bin/cake migrations create $1'
+alias ms='cd /var/www/wms && bin/cake migrations status'
+alias mm='cd /var/www/wms && bin/cake migrations mark_migrated --target=$1 --only'
+alias mg='cd /var/www/wms && bin/cake migrations migrate'
+alias mr='cd /var/www/wms && bin/cake migrations rollback'
+alias fp='cd /var/www/wms && chown www-data:www-data tmp logs webroot/files -Rv'
+alias cc='cd /var/www/wms && bin/cake schema_cache clear && bin/cake cache clear_all'
+alias gl='git log --oneline --graph'
+alias gs='git status'
+alias ga='git add . -A'
+alias gc='git commit -am'
+alias nb='cd /var/www/wms/src/React/shipment-app && npm run build'
+alias ns='cd /var/www/wms/src/React/shipment-app && npm run start'
+alias cake='bin/cake'
+
