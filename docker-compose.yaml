@@ -28,7 +28,7 @@ services:
     extra_hosts:
       - 'host.docker.internal:host-gateway'
     volumes:
-      - '.:/var/www/wms'
+      - '.:/var/www/html'
       - ./docker/config/nginx/site.conf:/etc/nginx/conf.d/default.conf
       # so we can cache our github tokens
       - '~/.composer/docker-cache/:/root/.composer:cached'
@@ -54,7 +54,7 @@ services:
     networks:
       - events-net
     volumes:
-      - .:/var/www/wms
+      - .:/var/www/html
     links:
       - mysql
       # - postgres
@@ -76,7 +76,7 @@ services:
   #   #   CUPS_PORT: '${CUPS_PORT}'
   #   #   APACHE_PORT: '${APACHE_PORT}'
   #   volumes:
-  #     - '.:/var/www/wms'
+  #     - '.:/var/www/html'
   #     # so we can cache our github tokens
   #     - '~/.composer/docker-cache/:/root/.composer:cached'
   #     - '~/.config/composer/:/root/.config/composer:cached'
