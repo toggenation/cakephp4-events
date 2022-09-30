@@ -65,7 +65,7 @@ class Application extends BaseApplication
             $this->addPlugin('DebugKit');
         }
 
-        // Load more plugins here
+    
     }
 
     /**
@@ -134,5 +134,6 @@ class Application extends BaseApplication
         $this->addPlugin('Migrations');
 
         // Load more plugins here
+        $this->addOptionalPlugin('IdeHelper');
     }
 }

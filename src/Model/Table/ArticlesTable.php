@@ -3,9 +3,20 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
+use App\Controller\ArticlesController;
+use App\Mailer\PublishedMailer;
+use Cake\Event\EventInterface;
+use Cake\Datasource\EntityInterface;
+use ArrayObject;
+use Cake\Controller\Component\FlashComponent;
+use Cake\Controller\ComponentRegistry;
+use Cake\Event\Event;
+use Cake\Http\Session;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
+use Cake\Utility\Inflector;
+use Cake\Utility\Text;
 use Cake\Validation\Validator;
 
 /**
@@ -43,7 +54,9 @@ class ArticlesTable extends Table
         $this->setDisplayField('title');
         $this->setPrimaryKey('id');
 
-        $this->addBehavior('Timestamp');
+       $this->addBehavior('Timestamp');
+
+       $this->getEventManager()->on(new PublishedMailer());
     }
 
     /**
@@ -71,5 +84,46 @@ class ArticlesTable extends Table
             ->notEmptyString('published');
 
         return $validator;
+    }
+
+    public function beforeSave(EventInterface $event, EntityInterface $entity, ArrayObject $options): void
+    {
+        // dd($entity->toArray());
+    
+        /**
+         * @var \App\Model\Entity\Article $entity
+         */
+        // if(!$entity->isNew()) {
+        //     $entity->title = strtoupper($entity->title);
+        // }
+
+        if(!$entity->isNew() && $entity->isDirty('published') && $entity->published) {
+            
+            $flash = new FlashComponent(
+                 new ComponentRegistry(
+                     new ArticlesController()
+                 )
+            );
+
+            $flash->success("Changed to published");
+
+            // dd(get_class($event->getSubject()));
+
+            $this->getEventManager()->dispatch(
+                new Event('Article.Published', $entity)
+            );
+
+            
+        }
+
+        // if(in_array('title', $entity->getDirty())) {
+        //     $entity->title = strtoupper($entity->title);
+        // };
+    }
+
+    public function beforeMarshal(EventInterface $event, ArrayObject $data, ArrayObject $options): void
+    {
+        // dd([ $data, $data->getArrayCopy()]);
+        
     }
 }
