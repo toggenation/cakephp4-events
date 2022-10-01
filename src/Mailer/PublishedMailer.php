@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Mailer;
@@ -25,9 +26,13 @@ class PublishedMailer extends Mailer implements EventListenerInterface
      */
     public static $name = 'Published';
 
-    public function notifyPublished(Event $event) {
+    public function notifyPublished(Event $event)
+    {
         $article = $event->getSubject();
-
+        // dd([
+        //     $event->getSubject(),
+        //     $event->getData()
+        // ]);
         $this->viewBuilder()
             ->setTemplate('default');
 
@@ -36,6 +41,5 @@ class PublishedMailer extends Mailer implements EventListenerInterface
             ->setEmailFormat('both')
             ->setViewVars(['content' => "A new article has been published"])
             ->send();
-            
     }
 }

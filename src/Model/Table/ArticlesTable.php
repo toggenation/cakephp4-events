@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Table;
@@ -54,9 +55,9 @@ class ArticlesTable extends Table
         $this->setDisplayField('title');
         $this->setPrimaryKey('id');
 
-       $this->addBehavior('Timestamp');
+        $this->addBehavior('Timestamp');
 
-       $this->getEventManager()->on(new PublishedMailer());
+        $this->getEventManager()->on(new PublishedMailer());
     }
 
     /**
@@ -89,7 +90,8 @@ class ArticlesTable extends Table
     public function beforeSave(EventInterface $event, EntityInterface $entity, ArrayObject $options): void
     {
         // dd($entity->toArray());
-    
+
+        // dd($event->getName());
         /**
          * @var \App\Model\Entity\Article $entity
          */
@@ -97,12 +99,13 @@ class ArticlesTable extends Table
         //     $entity->title = strtoupper($entity->title);
         // }
 
-        if(!$entity->isNew() && $entity->isDirty('published') && $entity->published) {
-            
+        //!$entity->isNew() && 
+        if ($entity->isDirty('published') && $entity->published) {
+
             $flash = new FlashComponent(
-                 new ComponentRegistry(
-                     new ArticlesController()
-                 )
+                new ComponentRegistry(
+                    new ArticlesController()
+                )
             );
 
             $flash->success("Changed to published");
@@ -110,10 +113,8 @@ class ArticlesTable extends Table
             // dd(get_class($event->getSubject()));
 
             $this->getEventManager()->dispatch(
-                new Event('Article.Published', $entity)
+                new Event('Article.Published', $entity, ['one' => "Hi James", 'two' => "Hi Two"])
             );
-
-            
         }
 
         // if(in_array('title', $entity->getDirty())) {
@@ -124,6 +125,6 @@ class ArticlesTable extends Table
     public function beforeMarshal(EventInterface $event, ArrayObject $data, ArrayObject $options): void
     {
         // dd([ $data, $data->getArrayCopy()]);
-        
+
     }
 }
