@@ -32,7 +32,7 @@ require __DIR__ . DIRECTORY_SEPARATOR . 'paths.php';
  */
 require CORE_PATH . 'config' . DS . 'bootstrap.php';
 
-use App\Events\GlobalEventListener;
+use App\EventListeners\GlobalListener;
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Core\Configure\Engine\PhpConfig;
@@ -226,4 +226,5 @@ TypeFactory::map('time', StringType::class);
 //Inflector::rules('irregular', ['red' => 'redlings']);
 //Inflector::rules('uninflected', ['dontinflectme']);
 
-EventManager::instance()->on(new GlobalEventListener());
+
+EventManager::instance()->on(new GlobalListener());
