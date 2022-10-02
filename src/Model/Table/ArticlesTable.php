@@ -1,8 +1,14 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Table;
 
+use App\Mailer\PublishedMailer;
+use Cake\Event\EventInterface;
+use Cake\Datasource\EntityInterface;
+use ArrayObject;
+use Cake\Event\Event;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
@@ -44,6 +50,35 @@ class ArticlesTable extends Table
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
+
+        $this->getEventManager()->on(new PublishedMailer());
+    }
+
+    public function beforeSave(EventInterface $event, EntityInterface $entity, ArrayObject $options): void
+    {
+        /**
+         * @var \App\Model\Entity\Article $entity
+         */
+        if ($entity->isNew()) {
+            $entity->title = strtoupper($entity->title);
+        }
+    }
+
+    public function afterSave(EventInterface $event, EntityInterface $entity, ArrayObject $options): void
+    {
+        // dd($event->getName()); "Model.afterSave"
+
+        if ($entity->isDirty('published') && $entity->published) {
+            //send an email
+
+            $this->getEventManager()->dispatch(
+                new Event('Article.Published', $entity)
+            );
+        }
+
+        // $this->getEventManager()->dispatch(
+        //     new Event('Global.Event')
+        // );
     }
 
     /**

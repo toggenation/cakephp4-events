@@ -1,7 +1,10 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Controller;
+
+use Cake\Event\Event;
 
 /**
  * Articles Controller
@@ -32,9 +35,22 @@ class ArticlesController extends AppController
      */
     public function view($id = null)
     {
+        $event = new Event('Global.Event', $this, [
+            'view' => 'yes',
+            'data' => ['ab' => 'c', 'd' => 'e']
+        ]);
+
+        $this->getEventManager()->dispatch(
+            $event
+        );
+
+        $result = $event->getResult();
+
         $article = $this->Articles->get($id, [
             'contain' => [],
         ]);
+
+        $this->Flash->success($result);
 
         $this->set(compact('article'));
     }
